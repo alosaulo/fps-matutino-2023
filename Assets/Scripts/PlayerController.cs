@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     {
         Movimento();
         Rotacao();
+        Atirar();
     }
 
     void Movimento()
@@ -70,6 +71,25 @@ public class PlayerController : MonoBehaviour
         verticalRotation = Mathf.Clamp(verticalRotation, -90, 90);
         cameraTransform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
 
+    }
+
+    void Atirar() 
+    {
+        if (Input.GetButtonDown("Fire1")) 
+        {
+            RaycastHit hit;
+            Vector3 origemRay = cameraTransform.position;
+            Vector3 direcaoRay = cameraTransform.forward;
+            float distanciaRay = 10f;
+
+            Debug.DrawRay(origemRay, direcaoRay * distanciaRay, Color.magenta,1f);
+
+            if (Physics.Raycast(origemRay,direcaoRay * distanciaRay,out hit))
+            {
+                Debug.Log(hit.transform.name);
+            }
+            
+        }
     }
 
 }
