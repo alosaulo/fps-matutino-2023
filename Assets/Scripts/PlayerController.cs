@@ -86,6 +86,15 @@ public class PlayerController : MonoBehaviour
 
             if (Physics.Raycast(origemRay,direcaoRay * distanciaRay,out hit))
             {
+                if (hit.transform.tag == "Inimigo") 
+                { 
+                    ZombieController zombie = 
+                        hit.transform.GetComponent<ZombieController>();
+                    if (zombie != null)
+                    {
+                        zombie.TomarDano(1);
+                    }
+                }
                 Debug.Log(hit.transform.name);
             }
             
