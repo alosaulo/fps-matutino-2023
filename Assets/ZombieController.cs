@@ -10,11 +10,15 @@ public class ZombieController : MonoBehaviour
 
     bool morto = false;
 
+    bool tomouDano = false;
+
     Animator animator;
 
     GameObject target;
 
     Rigidbody rigidBody;
+
+    public GameObject ZombieAtk;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +31,7 @@ public class ZombieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(morto == false) 
+        if(morto == false && tomouDano == false) 
         { 
             DoAI();
             Rotacionar();
@@ -62,13 +66,45 @@ public class ZombieController : MonoBehaviour
 
     public void TomarDano(int dano) 
     {
+        StartCoroutine("DanoCooldown");
         vida -= dano;
         animator.SetTrigger("dano");
-        if(vida <= 0) 
+        animator.SetBool("andar", false);
+        if (vida <= 0) 
         {
-            animator.SetBool("die", true);
-            morto = true;
+            Morrer();
         }
+    }
+
+    IEnumerator DanoCooldown()
+    {
+        tomouDano = true;
+        yield return new WaitForSeconds(1f);
+        tomouDano = false;
+    }
+
+    void Morrer() 
+    {
+        animator.SetBool("die", true);
+        morto = true;
+
+        rigidBody.useGravity = false;
+        rigidBody.velocity = Vector3.zero;
+        
+        Collider collider = GetComponent<Collider>();
+        collider.enabled = false;
+    }
+
+    public void AtivarAtk() 
+    { 
+        ZombieAtk.SetActive(true);
+        Debug.LogWarning("Ativei o ataque!");
+    }
+
+    public void DesativarAtk() 
+    {
+        ZombieAtk.SetActive(false);
+        Debug.LogWarning("Desativei o ataque!");
     }
 
 }
