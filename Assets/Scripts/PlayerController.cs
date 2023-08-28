@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Status")]
+    public int vida;
+    int vidaMax;
+
+    [Header("Física")]
     public bool noChao;
     public float gravidade;
     public float playerSpeed;
     public float forcaPulo;
 
     Vector3 playerVelocity;
-
+    
+    [Header("Controle")]
     public float sensibilidadeMouse;
 
     CharacterController characterController;
@@ -18,11 +24,16 @@ public class PlayerController : MonoBehaviour
     Transform cameraTransform;
     float verticalRotation;
 
+    GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        vidaMax = vida;
         characterController = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
+        gameManager = FindObjectOfType<GameManager>();
+        //gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -99,6 +110,29 @@ public class PlayerController : MonoBehaviour
             }
             
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "AtkInimigo") 
+        {
+            TomarDano(1);
+        }
+    }
+
+    public void TomarDano(int dano) 
+    {
+        vida -= dano;
+        gameManager.AtualizarBarraHP(vida, vidaMax);
+        if(vida <= 0) 
+        {
+            Morrer();
+        }
+    }
+
+    void Morrer() 
+    { 
+        gameObject.SetActive(false);
     }
 
 }

@@ -98,13 +98,11 @@ public class ZombieController : MonoBehaviour
     public void AtivarAtk() 
     { 
         ZombieAtk.SetActive(true);
-        Debug.LogWarning("Ativei o ataque!");
     }
 
     public void DesativarAtk() 
     {
         ZombieAtk.SetActive(false);
-        Debug.LogWarning("Desativei o ataque!");
     }
 
 }
