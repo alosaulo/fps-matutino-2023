@@ -20,12 +20,16 @@ public class ZombieController : MonoBehaviour
 
     public GameObject ZombieAtk;
 
+    SpawnController spawnController;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player");
         rigidBody = GetComponent<Rigidbody>();
+        spawnController = GameObject.
+            FindGameObjectWithTag("GameController").GetComponent<SpawnController>();
     }
 
     // Update is called once per frame
@@ -93,6 +97,13 @@ public class ZombieController : MonoBehaviour
         
         Collider collider = GetComponent<Collider>();
         collider.enabled = false;
+
+        spawnController.MeRemove(gameObject);
+    }
+
+    public void SetSpawnController(SpawnController controller) 
+    {
+        this.spawnController = controller;
     }
 
     public void AtivarAtk() 
