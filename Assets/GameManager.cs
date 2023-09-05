@@ -2,10 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public TextMeshProUGUI txtMunicao;
+
+    public TextMeshProUGUI txtScore;
+
     public Image barraHP;
+
+    int score = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +30,17 @@ public class GameManager : MonoBehaviour
     {
         float fill = vidaAtual / vidaMax;
         barraHP.fillAmount = fill;
+    }
+
+    public void AtualizarTMPMunicao(int valor) 
+    { 
+        txtMunicao.text = valor.ToString();
+    }
+
+    public void AtualizarScore() 
+    {
+        score++;
+        txtScore.text = "Score: " + score.ToString();
     }
 
 }

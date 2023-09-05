@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     [Header("Status")]
     public int vida;
     int vidaMax;
+    public int municaoMax;
+    public int municaoAtual;
 
     [Header("Física")]
     public bool noChao;
@@ -18,6 +20,9 @@ public class PlayerController : MonoBehaviour
     
     [Header("Controle")]
     public float sensibilidadeMouse;
+
+    [Header("Som")]
+    public AudioSource audioSourceArma;
 
     CharacterController characterController;
     
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
         Movimento();
         Rotacao();
         Atirar();
+        gameManager.AtualizarTMPMunicao(municaoAtual);
     }
 
     void Movimento()
@@ -86,8 +92,10 @@ public class PlayerController : MonoBehaviour
 
     void Atirar() 
     {
-        if (Input.GetButtonDown("Fire1")) 
+        if (Input.GetButtonDown("Fire1") && municaoAtual > 0) 
         {
+            municaoAtual -= 1;
+            audioSourceArma.Play();
             RaycastHit hit;
             Vector3 origemRay = cameraTransform.position;
             Vector3 direcaoRay = cameraTransform.forward;

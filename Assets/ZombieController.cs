@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class ZombieController : MonoBehaviour
 {
+    public AudioClip[] sonsZumbi;
+
+    public AudioClip[] sonsDano;
+
+    public AudioClip[] sonsAtaque;
+
+    public AudioSource audioSourceZumbi;
+
     public float velocidade;
 
     public int vida;
@@ -22,14 +30,18 @@ public class ZombieController : MonoBehaviour
 
     SpawnController spawnController;
 
+    GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         animator = GetComponent<Animator>();
         target = GameObject.FindGameObjectWithTag("Player");
         rigidBody = GetComponent<Rigidbody>();
         spawnController = GameObject.
             FindGameObjectWithTag("GameController").GetComponent<SpawnController>();
+        audioSourceZumbi = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -47,6 +59,7 @@ public class ZombieController : MonoBehaviour
         float distancia = Vector3.Distance(transform.position, target.transform.position);
         if (distancia <= 2)//Se a distância for menor ou igual a 2 ele para e ataca
         {
+            TocarSomAtaque();
             animator.SetTrigger("atk");
             animator.SetBool("andar", false);
         }
@@ -70,6 +83,7 @@ public class ZombieController : MonoBehaviour
 
     public void TomarDano(int dano) 
     {
+        TocarSomDano();
         StartCoroutine("DanoCooldown");
         vida -= dano;
         animator.SetTrigger("dano");
@@ -89,6 +103,10 @@ public class ZombieController : MonoBehaviour
 
     void Morrer() 
     {
+        TocarSomDano();
+
+        gameManager.AtualizarScore();
+
         animator.SetBool("die", true);
         morto = true;
 
@@ -107,13 +125,40 @@ public class ZombieController : MonoBehaviour
     }
 
     public void AtivarAtk() 
-    { 
+    {
         ZombieAtk.SetActive(true);
     }
 
     public void DesativarAtk() 
     {
         ZombieAtk.SetActive(false);
+    }
+
+    void TocarSomZumbi() 
+    {
+        if (!audioSourceZumbi.isPlaying) 
+        { 
+            int aleatorio = Random.Range(0, sonsZumbi.Length);
+            audioSourceZumbi.PlayOneShot(sonsZumbi[aleatorio]);
+        }
+    }
+
+    void TocarSomAtaque() 
+    {
+        if (!audioSourceZumbi.isPlaying)
+        {
+            int aleatorio = Random.Range(0, sonsAtaque.Length);
+            audioSourceZumbi.PlayOneShot(sonsAtaque[aleatorio]);
+        }
+    }
+
+    void TocarSomDano() 
+    {
+        if (!audioSourceZumbi.isPlaying)
+        {
+            int aleatorio = Random.Range(0, sonsDano.Length);
+            audioSourceZumbi.PlayOneShot(sonsDano[aleatorio]);
+        }
     }
 
 }
