@@ -126,6 +126,15 @@ public class PlayerController : MonoBehaviour
         {
             TomarDano(1);
         }
+
+        if (other.tag == "Bala" && (municaoAtual < municaoMax)) 
+        { 
+            BalaController bala = other.GetComponent<BalaController>();
+            municaoAtual += bala.quantidade;
+            if(municaoAtual > municaoMax)
+                municaoAtual = municaoMax;
+            bala.Coletar();
+        }
     }
 
     public void TomarDano(int dano) 
