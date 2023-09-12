@@ -16,7 +16,7 @@ public class SpawnController : MonoBehaviour
 
     public GameObject SpawnPrefab;
 
-    float spawnCounter;
+    public float spawnCounter;
 
     // Start is called before the first frame update
     void Start()
@@ -64,4 +64,5 @@ public class SpawnController : MonoBehaviour
     { 
         listaGameObjects.Remove(go);
     }
+
 }

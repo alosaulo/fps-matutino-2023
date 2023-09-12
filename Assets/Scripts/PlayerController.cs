@@ -150,6 +150,7 @@ public class PlayerController : MonoBehaviour
     void Morrer() 
     { 
         gameObject.SetActive(false);
+        gameManager.GameOver();
     }
 
 }

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
     public TextMeshProUGUI txtMunicao;
 
     public TextMeshProUGUI txtScore;
+
+    public TextMeshProUGUI txtScoreGameOver;
+
+    public GameObject pnlGameOver;
 
     public Image barraHP;
 
@@ -17,7 +23,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Pausar();
     }
 
     // Update is called once per frame
@@ -41,6 +47,30 @@ public class GameManager : MonoBehaviour
     {
         score++;
         txtScore.text = "Score: " + score.ToString();
+        txtScoreGameOver.text = "Score: " + score.ToString();
+    }
+
+    public void Pausar()
+    {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+    }
+
+    public void Play()
+    {
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+    }
+
+    public void Restart() 
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void GameOver() 
+    {
+        Pausar();
+        pnlGameOver.SetActive(true);
     }
 
 }
