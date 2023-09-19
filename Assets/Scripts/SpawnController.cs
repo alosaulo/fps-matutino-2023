@@ -14,7 +14,7 @@ public class SpawnController : MonoBehaviour
 
     public float SpawnTime;
 
-    public GameObject SpawnPrefab;
+    public GameObject[] SpawnPrefab;
 
     public float spawnCounter;
 
@@ -52,9 +52,12 @@ public class SpawnController : MonoBehaviour
     {
         spawn = false;
 
-        int random = Random.Range(0, listaSpawns.Count);
+        int randomSpawn = Random.Range(0, listaSpawns.Count);
 
-        GameObject go = Instantiate(SpawnPrefab, listaSpawns[random].position, 
+        int randomInimigo = Random.Range(0, SpawnPrefab.Length);
+
+        GameObject go = Instantiate(SpawnPrefab[randomInimigo], 
+            listaSpawns[randomSpawn].position, 
             Quaternion.identity);
 
         listaGameObjects.Add(go);

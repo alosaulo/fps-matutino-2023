@@ -875,7 +875,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 87503fe22b6621b46ad65fe76b0b03f9, type: 3}
   audioSourceZumbi: {fileID: 1766887234}
   velocidade: 1
-  vida: 10
+  vida: 4
   ZombieAtk: {fileID: 1067557005}
 --- !u!82 &1766887234
 AudioSource:
